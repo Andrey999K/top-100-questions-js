@@ -1,0 +1,45 @@
+{
+  "name": "top-100-questions-js",
+  "version": "1.0.0",
+  "description": "Top 100 js interview questions",
+  "private": true,
+  "scripts": {
+    "start": "npx webpack serve --config webpack.config.dev.js",
+    "build": "npx webpack --config webpack.config.prod.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Andrey999K/top-100-questions-js.git"
+  },
+  "keywords": [
+    "js",
+    "interview",
+    "questions"
+  ],
+  "author": "Andrey999K",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Andrey999K/top-100-questions-js/issues"
+  },
+  "homepage": "https://github.com/Andrey999K/top-100-questions-js#readme",
+  "devDependencies": {
+    "copy-webpack-plugin": "^12.0.2",
+    "css-loader": "^6.9.1",
+    "css-minimizer-webpack-plugin": "^6.0.0",
+    "html-webpack-plugin": "^5.6.0",
+    "mini-css-extract-plugin": "^2.7.7",
+    "postcss": "^8.4.33",
+    "postcss-loader": "^8.0.0",
+    "sass": "^1.70.0",
+    "sass-loader": "^14.0.0",
+    "style-loader": "^3.3.4",
+    "terser-webpack-plugin": "^5.3.10",
+    "webpack": "^5.90.0",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^4.15.1",
+    "webpack-merge": "^5.10.0"
+  },
+  "dependencies": {
+    "postcss-preset-env": "^9.3.0"
+  }
+}
