@@ -5,11 +5,27 @@ let testStarted = false;
 let testEnded = false;
 let currentQuestionIndex = 0;
 let successAnswers = 0;
+let darkTheme = false;
 
 const startTest = () => {
+  successAnswers = 0;
+  currentQuestionIndex = 0;
   testStarted = true;
+  testEnded = false;
   render();
 };
+
+const deleteHandlers = () => {
+  if (testStarted && document.querySelector(".start-button")) {
+    document.querySelector(".start-button").removeEventListener("click", startTest);
+  }
+  if (!testEnded && document.querySelector(".button-start-again")) {
+    const buttonStartAgain = document.querySelector(".button-start-again");
+    buttonStartAgain.removeEventListener("click", startTest);
+  }
+  const answers = document.querySelectorAll(".question-answers__item");
+  answers.forEach(answer => answer.removeEventListener("click", selectAnswer));
+}
 
 const selectAnswer = (e) => {
   const elem = e.target.closest("[data-answer]");
@@ -21,6 +37,7 @@ const selectAnswer = (e) => {
     elem.classList.add("success");
   }
   else elem.classList.add("error");
+  deleteHandlers();
   setTimeout(() => {
     if (++currentQuestionIndex >= questions.length) {
       currentQuestionIndex = 0;
@@ -31,10 +48,13 @@ const selectAnswer = (e) => {
 };
 
 function render() {
-  if (testStarted && document.querySelector(".start-button")) {
-    document.querySelector(".start-button").removeEventListener("click", startTest);
-  }
+  deleteHandlers();
+  if (darkTheme) document.body.className = "dark";
+  else document.body.className = "";
   document.body.innerHTML = `
+    <svg class="logo">
+      <use xlink:href="sprite.svg#logo" />
+    </svg>
     <div class="container">
       ${
         !testStarted
@@ -54,15 +74,23 @@ function render() {
             : `
               <div>
                 <h2>Ваш счёт: ${successAnswers}/${questions.length}</h2>
+                <button class="button-start-again">Начать заново</button>
               </div>
             `)
       }
     </div>`;
+  if (testEnded) {
+    const buttonStartAgain = document.querySelector(".button-start-again");
+    buttonStartAgain.addEventListener("click", startTest);
+  }
   if (testStarted) {
     const answers = document.querySelectorAll(".question-answers__item");
     answers.forEach(answer => answer.addEventListener("click", selectAnswer));
   }
-  if (!testStarted) document.querySelector(".start-button").addEventListener("click", startTest);
+  if (!testStarted) {
+    const startButton = document.querySelector(".start-button");
+    startButton.addEventListener("click", startTest);
+  }
 }
 
 render();
