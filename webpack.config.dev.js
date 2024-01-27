@@ -4,7 +4,7 @@ const { resolve } = require("path");
 
 module.exports = merge(commonConfig, {
   mode: "development",
-  devtool: "source-map",
+  devtool: "inline-source-map",
   devServer: {
     port: 3000,
     hot: true,
