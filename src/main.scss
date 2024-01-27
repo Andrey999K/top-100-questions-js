@@ -3,7 +3,7 @@
   src: url("./fonts/Roboto-Regular.ttf") format('truetupe');
 }
 
-body, button, ol, li {
+body, button, ol, li, div {
   margin: 0;
   padding: 0;
   border: none;
@@ -13,37 +13,51 @@ body, button, ol, li {
 body {
   position: relative;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
   font-family: "Roboto", sans-serif;
   height: 100dvh;
   background: #f0db4f;
+  transition: .2s;
   //background: url("./img/logo-javascript.svg") no-repeat center/contain, #F0DC4E;
 
   &.dark {
     background: black;
+    transition: .2s;
   }
+}
+
+.content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
 }
 
 .logo {
   height: 100%;
   width: 100%;
   color: #f0db4f;
+  transition: .2s;
 }
 
 .dark {
 
   .logo {
     color: black;
+    transition: .2s;
   }
 
   h2 {
     color: white;
+    transition: .2s;
   }
 
   .question-answers__item {
     background: #262626;
     color: white;
+    transition: .2s;
 
     &:hover {
       background: #383838;
@@ -98,14 +112,45 @@ body {
       }
 
       &.error {
-        background: red;
+        background: red !important;
         transition: 0.2s;
       }
 
       &.success {
-        background: green;
+        background: green !important;
         transition: 0.2s;
       }
     }
+  }
+}
+
+.switch-theme {
+  position: absolute;
+  top: 5%;
+  border-radius: 9999px;
+  background: #f0aa4f;
+  height: 40px;
+  width: 70px;
+  padding: 5px;
+  cursor: pointer;
+  transition: .2s;
+
+  &.dark {
+    background: #f0db4f;
+    transition: .2s;
+
+    .switch-theme__circle {
+      transform: translate(30px);
+      background: #f0aa4f;
+      transition: .2s;
+    }
+  }
+
+  &__circle {
+    border-radius: 9999px;
+    height: 30px;
+    width: 30px;
+    background: #f0db4f;
+    transition: .2s;
   }
 }
