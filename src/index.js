@@ -7,12 +7,35 @@ let currentQuestionIndex = 0;
 let successAnswers = 0;
 let darkTheme = false;
 
+const createElement = (tag, className) => {
+  const elem = document.createElement(tag);
+  elem.className = className;
+  return elem;
+}
+
+const switchTheme = createElement("div", "switch-theme");
+switchTheme.innerHTML = `<div class="switch-theme__circle"></div>`;
+document.body.append(switchTheme);
+if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+  darkTheme = true;
+  switchTheme.classList.add("dark");
+  document.body.classList.add("dark");
+}
+switchTheme.addEventListener("click", () => {
+  darkTheme = !darkTheme;
+  switchTheme.classList.toggle("dark");
+  document.body.classList.toggle("dark");
+});
+
+const content = createElement("div", "content");
+document.body.append(content);
+
 const startTest = () => {
   successAnswers = 0;
   currentQuestionIndex = 0;
   testStarted = true;
   testEnded = false;
-  render();
+  renderContent();
 };
 
 const deleteHandlers = () => {
@@ -43,15 +66,15 @@ const selectAnswer = (e) => {
       currentQuestionIndex = 0;
       testEnded = true;
     }
-    render();
+    renderContent();
   }, 1000);
 };
 
-function render() {
+function renderContent() {
   deleteHandlers();
   if (darkTheme) document.body.className = "dark";
   else document.body.className = "";
-  document.body.innerHTML = `
+  content.innerHTML = `
     <svg class="logo">
       <use xlink:href="sprite.svg#logo" />
     </svg>
@@ -93,4 +116,4 @@ function render() {
   }
 }
 
-render();
+renderContent();
