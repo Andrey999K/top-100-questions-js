@@ -3,7 +3,28 @@
   src: url("./fonts/Roboto-Regular.ttf") format('truetupe');
 }
 
+body, button {
+  margin: 0;
+  padding: 0;
+  border: none;
+  box-sizing: border-box;
+}
+
 body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-family: "Roboto", sans-serif;
-  background: orange;
+  height: 100dvh;
+  background: url("./img/logo-javascript.svg") no-repeat center/contain, #F0DC4E;
+}
+
+.start-button {
+  margin-bottom: 20%;
+  padding: 15px;
+  border-radius: 20px;
+  background: #f0aa4f;
+  font-size: 20px;
+  cursor: pointer;
+  border: none;
 }
