@@ -1,7 +1,7 @@
 [
   {
     "id": 1,
-    "question": "Чем отличается оператор \"==\" от \"===\"?",
+    "text": "Чем отличается оператор \"==\" от \"===\"?",
     "answers": [
       {
         "id": 1,
@@ -20,11 +20,11 @@
         "text": "В JavaScript нет оператора \"===\""
       }
     ],
-    "right_answer": 2
+    "rightAnswer": 2
   },
   {
     "id": 2,
-    "question": "Какие основные типы данных есть в JavaScript?",
+    "text": "Какие основные типы данных есть в JavaScript?",
     "answers": [
       {
         "id": 1,
@@ -43,11 +43,11 @@
         "text": "Number, BigInt, String, Boolean, Null, Undefined, Object"
       }
     ],
-    "right_answer": 1
+    "rightAnswer": 1
   },
   {
     "id": 3,
-    "question": "В чём отличие var, let и const?",
+    "text": "В чём отличие var, let и const?",
     "answers": [
       {
         "id": 1,
@@ -66,6 +66,6 @@
         "text": "var это старый синтаксис let. Они имеют функциональную область видимости, а const отличается от них тем, что имеет блочную область видимости"
       }
     ],
-    "right_answer": 2
+    "rightAnswer": 2
   }
 ]
