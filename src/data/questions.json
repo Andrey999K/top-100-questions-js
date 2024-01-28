@@ -93,7 +93,7 @@
   },
   {
     "id": 5,
-    "text": "Что такое event.preventDefault()?",
+    "text": "Что делает event.preventDefault()?",
     "answers": [
       {
         "id": 1,
