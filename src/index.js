@@ -92,7 +92,11 @@ function renderContent() {
           : (!testEnded
             ? `
               <div class="question">
-                <h2>${questions[currentQuestionIndex].text}</h2>
+                <h2 class="question__text">${questions[currentQuestionIndex].text}</h2>
+                ${questions[currentQuestionIndex].img ? `
+                <div class="question__wrapper-image">
+                  <img class="question__image" src="${questions[currentQuestionIndex].img}" alt="">
+                </div>` : ""}
                 <ol class="question-answers">
                   ${questions[currentQuestionIndex].answers.map((answer) => `
                     <li class="question-answers__item" data-answer="${answer.id}" data-question="${questions[currentQuestionIndex].id}">
