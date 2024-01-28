@@ -1,5 +1,10 @@
 import "./main.scss";
 import questions from "./data/questions.json";
+import shuffle from "./utils/shuffle";
+
+const randomizeQuestions = () => {
+  questions = shuffle(questions).map(question => ({ ...question, answers: shuffle(question.answers) }));
+};
 
 let testStarted = false;
 let testEnded = false;
@@ -31,6 +36,8 @@ const content = createElement("div", "content");
 document.body.append(content);
 
 const startTest = () => {
+  randomizeQuestions();
+  console.log(questions);
   successAnswers = 0;
   currentQuestionIndex = 0;
   testStarted = true;
@@ -87,8 +94,8 @@ function renderContent() {
               <div class="question">
                 <h2>${questions[currentQuestionIndex].text}</h2>
                 <ol class="question-answers">
-                  ${questions[currentQuestionIndex].answers.map(answer => `
-                    <li class="question-answers__item" data-answer="${answer.id}" data-question="${currentQuestionIndex + 1}">
+                  ${questions[currentQuestionIndex].answers.map((answer) => `
+                    <li class="question-answers__item" data-answer="${answer.id}" data-question="${questions[currentQuestionIndex].id}">
                       <span>${answer.text}</span>
                     </li>
                   `).join("")}
