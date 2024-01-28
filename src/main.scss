@@ -112,11 +112,13 @@ body {
       }
 
       &.error {
+        color: white;
         background: red !important;
         transition: 0.2s;
       }
 
       &.success {
+        color: white;
         background: green !important;
         transition: 0.2s;
       }

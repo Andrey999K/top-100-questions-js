@@ -51,7 +51,7 @@ const deleteHandlers = () => {
 }
 
 const selectAnswer = (e) => {
-  const elem = e.target.closest("[data-answer]");
+  const elem = e.currentTarget;
   const answerId = Number(elem.getAttribute("data-answer"));
   const questionId = Number(elem.getAttribute("data-question"));
   let currentQuestion = questions.find(question => question.id === questionId);
