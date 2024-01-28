@@ -1,8 +1,10 @@
 import "./main.scss";
 import questions from "./data/questions.json";
 import shuffle from "./utils/shuffle";
-questions = shuffle(questions);
-console.log(questions);
+
+const randomizeQuestions = () => {
+  questions = shuffle(questions).map(question => ({ ...question, answers: shuffle(question.answers) }));
+};
 
 let testStarted = false;
 let testEnded = false;
@@ -34,6 +36,8 @@ const content = createElement("div", "content");
 document.body.append(content);
 
 const startTest = () => {
+  randomizeQuestions();
+  console.log(questions);
   successAnswers = 0;
   currentQuestionIndex = 0;
   testStarted = true;
