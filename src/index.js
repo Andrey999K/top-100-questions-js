@@ -14,12 +14,14 @@ let currentQuestionIndex = 0;
 let rightAnswers = 0;
 let darkTheme = false;
 let score = 0;
+let time = `Время: 00:00.0`;
+let timer = null;
 
 const createElement = (tag, className) => {
   const elem = document.createElement(tag);
   elem.className = className;
   return elem;
-}
+};
 
 const switchTheme = createElement("div", "switch-theme");
 switchTheme.innerHTML = `<div class="switch-theme__circle"></div>`;
@@ -29,6 +31,14 @@ if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').match
   switchTheme.classList.add("dark");
   document.body.classList.add("dark");
 }
+
+const timerElem = createElement("div", "timer");
+document.body.append(timerElem);
+
+const renderTimer = () => {
+  timerElem.innerHTML = time;
+};
+
 switchTheme.addEventListener("click", () => {
   darkTheme = !darkTheme;
   switchTheme.classList.toggle("dark");
@@ -38,12 +48,28 @@ switchTheme.addEventListener("click", () => {
 const content = createElement("div", "content");
 document.body.append(content);
 
+const formatTime = (seconds) => {
+  seconds %= 60;
+  return seconds < 10 ? `0${seconds}` : String(seconds);
+};
+
+const startTimer = () => {
+  let second = 0;
+  timer = setInterval(() => {
+    second += 1;
+    time = `Время: ${formatTime(Math.floor(second / 600))}:${formatTime(Math.floor(second / 10))}.${second % 10}`;
+    renderTimer();
+  }, 100)
+};
+
 const startTest = () => {
   randomQuestions = randomizeQuestions();
   rightAnswers = 0;
   score = 0;
   currentQuestionIndex = 0;
   testStarted = true;
+  clearInterval(timer);
+  startTimer();
   testEnded = false;
   renderContent();
 };
@@ -72,8 +98,9 @@ const selectAnswer = (e) => {
   }
   else elem.classList.add("error");
   deleteHandlers();
+  if (++currentQuestionIndex >= randomQuestions.length) clearInterval(timer);
   setTimeout(() => {
-    if (++currentQuestionIndex >= randomQuestions.length) {
+    if (currentQuestionIndex >= randomQuestions.length) {
       currentQuestionIndex = 0;
       testEnded = true;
     }
