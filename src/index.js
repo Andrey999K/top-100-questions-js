@@ -11,7 +11,7 @@ let randomQuestions = randomizeQuestions();
 let testStarted = false;
 let testEnded = false;
 let currentQuestionIndex = 0;
-let successAnswers = 0;
+let rightAnswers = 0;
 let darkTheme = false;
 
 const createElement = (tag, className) => {
@@ -39,7 +39,7 @@ document.body.append(content);
 
 const startTest = () => {
   randomQuestions = randomizeQuestions();
-  successAnswers = 0;
+  rightAnswers = 0;
   currentQuestionIndex = 0;
   testStarted = true;
   testEnded = false;
@@ -64,7 +64,7 @@ const selectAnswer = (e) => {
   const questionId = Number(elem.getAttribute("data-question"));
   let currentQuestion = randomQuestions.find(question => question.id === questionId);
   if (currentQuestion.rightAnswer === answerId) {
-    successAnswers++;
+    rightAnswers++;
     elem.classList.add("success");
   }
   else elem.classList.add("error");
@@ -92,6 +92,9 @@ function renderContent() {
           ? `<button class="start-button">Начать тест</button>`
           : (!testEnded
             ? `
+              <div class="result">
+                <div class="result__right-answers">${rightAnswers + "/" + randomQuestions.length}</div>
+              </div>
               <div class="question">
                 <h2 class="question__text">${randomQuestions[currentQuestionIndex].text}</h2>
                 ${randomQuestions[currentQuestionIndex].img
@@ -110,7 +113,7 @@ function renderContent() {
               </div>`
             : `
               <div>
-                <h2>Ваш счёт: ${successAnswers}/${randomQuestions.length}</h2>
+                <h2>Ваш счёт: ${rightAnswers}/${randomQuestions.length}</h2>
                 <button class="button-start-again">Начать заново</button>
               </div>
             `)
