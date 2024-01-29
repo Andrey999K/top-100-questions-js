@@ -93,11 +93,13 @@ function renderContent() {
           : (!testEnded
             ? `
               <div class="question">
-                <h2 class="question__text">${questions[currentQuestionIndex].text}</h2>
-                ${questions[currentQuestionIndex].img ? `
-                <div class="question__wrapper-image">
-                  <img class="question__image" src="${questions[currentQuestionIndex].img}" alt="">
-                </div>` : ""}
+                <h2 class="question__text">${randomQuestions[currentQuestionIndex].text}</h2>
+                ${randomQuestions[currentQuestionIndex].img
+                  ? `<div class="question__wrapper-image">
+                      <img class="question__image" src="${randomQuestions[currentQuestionIndex].img}" alt="">
+                    </div>`
+                  : ""
+                }
                 <ol class="question-answers">
                   ${randomQuestions[currentQuestionIndex].answers.map((answer) => `
                     <li class="question-answers__item" data-answer="${answer.id}" data-question="${randomQuestions[currentQuestionIndex].id}">
