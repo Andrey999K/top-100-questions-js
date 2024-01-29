@@ -93,15 +93,11 @@ function renderContent() {
           : (!testEnded
             ? `
               <div class="question">
-<<<<<<< Updated upstream
-                <h2>${questions[currentQuestionIndex].text}</h2>
-=======
-                <h2 class="question__text">${randomQuestions[currentQuestionIndex].text}</h2>
-                ${randomQuestions[currentQuestionIndex].img ? `
+                <h2 class="question__text">${questions[currentQuestionIndex].text}</h2>
+                ${questions[currentQuestionIndex].img ? `
                 <div class="question__wrapper-image">
-                  <img class="question__image" src="${randomQuestions[currentQuestionIndex].img}" alt="">
+                  <img class="question__image" src="${questions[currentQuestionIndex].img}" alt="">
                 </div>` : ""}
->>>>>>> Stashed changes
                 <ol class="question-answers">
                   ${randomQuestions[currentQuestionIndex].answers.map((answer) => `
                     <li class="question-answers__item" data-answer="${answer.id}" data-question="${randomQuestions[currentQuestionIndex].id}">

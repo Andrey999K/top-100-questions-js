@@ -24,6 +24,10 @@ module.exports = {
         {
           from: resolve(__dirname, "public/sprite.svg"),
           to: resolve(__dirname, "dist")
+        },
+        {
+          from: resolve(__dirname, "public/img"),
+          to: resolve(__dirname, "dist/img")
         }
       ],
     }),
