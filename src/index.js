@@ -3,8 +3,10 @@ import questions from "./data/questions.json";
 import shuffle from "./utils/shuffle";
 
 const randomizeQuestions = () => {
-  questions = shuffle(questions).map(question => ({ ...question, answers: shuffle(question.answers) }));
+  return shuffle(questions).map(question => ({ ...question, answers: shuffle(question.answers) }));
 };
+
+let randomQuestions = randomizeQuestions();
 
 let testStarted = false;
 let testEnded = false;
@@ -36,8 +38,7 @@ const content = createElement("div", "content");
 document.body.append(content);
 
 const startTest = () => {
-  randomizeQuestions();
-  console.log(questions);
+  randomQuestions = randomizeQuestions();
   successAnswers = 0;
   currentQuestionIndex = 0;
   testStarted = true;
@@ -61,7 +62,7 @@ const selectAnswer = (e) => {
   const elem = e.currentTarget;
   const answerId = Number(elem.getAttribute("data-answer"));
   const questionId = Number(elem.getAttribute("data-question"));
-  let currentQuestion = questions.find(question => question.id === questionId);
+  let currentQuestion = randomQuestions.find(question => question.id === questionId);
   if (currentQuestion.rightAnswer === answerId) {
     successAnswers++;
     elem.classList.add("success");
@@ -69,7 +70,7 @@ const selectAnswer = (e) => {
   else elem.classList.add("error");
   deleteHandlers();
   setTimeout(() => {
-    if (++currentQuestionIndex >= questions.length) {
+    if (++currentQuestionIndex >= randomQuestions.length) {
       currentQuestionIndex = 0;
       testEnded = true;
     }
@@ -98,8 +99,8 @@ function renderContent() {
                   <img class="question__image" src="${questions[currentQuestionIndex].img}" alt="">
                 </div>` : ""}
                 <ol class="question-answers">
-                  ${questions[currentQuestionIndex].answers.map((answer) => `
-                    <li class="question-answers__item" data-answer="${answer.id}" data-question="${questions[currentQuestionIndex].id}">
+                  ${randomQuestions[currentQuestionIndex].answers.map((answer) => `
+                    <li class="question-answers__item" data-answer="${answer.id}" data-question="${randomQuestions[currentQuestionIndex].id}">
                       <span>${answer.text}</span>
                     </li>
                   `).join("")}
@@ -107,7 +108,7 @@ function renderContent() {
               </div>`
             : `
               <div>
-                <h2>Ваш счёт: ${successAnswers}/${questions.length}</h2>
+                <h2>Ваш счёт: ${successAnswers}/${randomQuestions.length}</h2>
                 <button class="button-start-again">Начать заново</button>
               </div>
             `)
