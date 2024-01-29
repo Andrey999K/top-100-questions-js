@@ -13,6 +13,7 @@ let testEnded = false;
 let currentQuestionIndex = 0;
 let rightAnswers = 0;
 let darkTheme = false;
+let score = 0;
 
 const createElement = (tag, className) => {
   const elem = document.createElement(tag);
@@ -40,6 +41,7 @@ document.body.append(content);
 const startTest = () => {
   randomQuestions = randomizeQuestions();
   rightAnswers = 0;
+  score = 0;
   currentQuestionIndex = 0;
   testStarted = true;
   testEnded = false;
@@ -65,6 +67,7 @@ const selectAnswer = (e) => {
   let currentQuestion = randomQuestions.find(question => question.id === questionId);
   if (currentQuestion.rightAnswer === answerId) {
     rightAnswers++;
+    score += currentQuestion.points;
     elem.classList.add("success");
   }
   else elem.classList.add("error");
@@ -93,7 +96,8 @@ function renderContent() {
           : (!testEnded
             ? `
               <div class="result">
-                <div class="result__right-answers">${rightAnswers + "/" + randomQuestions.length}</div>
+                <p class="result__right-answers">${rightAnswers + "/" + randomQuestions.length}</p>
+                <p class="result__score">Очки: ${score}</p>
               </div>
               <div class="question">
                 <h2 class="question__text">${randomQuestions[currentQuestionIndex].text}</h2>
@@ -112,8 +116,9 @@ function renderContent() {
                 </ol>
               </div>`
             : `
-              <div>
+              <div class="result">
                 <h2>Ваш счёт: ${rightAnswers}/${randomQuestions.length}</h2>
+                <p>Очки: ${score}</p>
                 <button class="button-start-again">Начать заново</button>
               </div>
             `)

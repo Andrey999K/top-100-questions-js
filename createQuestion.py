@@ -5,7 +5,7 @@ with open('src/data/questions.json', 'r', encoding='utf-8') as file:
   data = json.load(file)
 
 for item in data:
-  item["img"] = ""
+  item["points"] = 100
 
 with open('src/data/questions.json', 'w', encoding='utf-8') as file:
   json.dump(data, file, ensure_ascii=False, indent=2)
