@@ -16,6 +16,7 @@ let darkTheme = false;
 let score = 0;
 let time = `Время: 00:00.0`;
 let timer = null;
+let pointAnswer = 0;
 
 const createElement = (tag, className) => {
   const elem = document.createElement(tag);
@@ -38,6 +39,19 @@ document.body.append(timerElem);
 const renderTimer = () => {
   timerElem.innerHTML = time;
 };
+
+const renderScore = (statusAnswer) => {
+  console.log()
+  document.querySelector(".result").innerHTML = `
+  <div class="result">
+    <p class="result__right-answers">${rightAnswers + "/" + randomQuestions.length}</p>
+    <div class="result__score">
+      <p>Очки: ${score}</p>
+      <p class="question-points">${statusAnswer ? `+${randomQuestions[currentQuestionIndex].points}` : "" }</p>
+    </div>
+  </div>
+  `
+}
 
 switchTheme.addEventListener("click", () => {
   darkTheme = !darkTheme;
@@ -91,13 +105,15 @@ const selectAnswer = (e) => {
   const answerId = Number(elem.getAttribute("data-answer"));
   const questionId = Number(elem.getAttribute("data-question"));
   let currentQuestion = randomQuestions.find(question => question.id === questionId);
-  if (currentQuestion.rightAnswer === answerId) {
+  const right = currentQuestion.rightAnswer === answerId;
+  if (right) {
     rightAnswers++;
     score += currentQuestion.points;
     elem.classList.add("success");
   }
   else elem.classList.add("error");
   deleteHandlers();
+  renderScore(right);
   if (++currentQuestionIndex >= randomQuestions.length) clearInterval(timer);
   setTimeout(() => {
     if (currentQuestionIndex >= randomQuestions.length) {
@@ -105,7 +121,7 @@ const selectAnswer = (e) => {
       testEnded = true;
     }
     renderContent();
-  }, 1000);
+  }, 1500);
 };
 
 function renderContent() {
@@ -124,10 +140,13 @@ function renderContent() {
             ? `
               <div class="result">
                 <p class="result__right-answers">${rightAnswers + "/" + randomQuestions.length}</p>
-                <p class="result__score">Очки: ${score}</p>
+                <div class="result__score">
+                  <p>Очки: ${score}</p>
+                  <p class="question-points"></p>
+                </div>
               </div>
               <div class="question">
-                <h2 class="question__text">${randomQuestions[currentQuestionIndex].text}</h2>
+                <h2 class="question__text">${(currentQuestionIndex + 1) + ") " + randomQuestions[currentQuestionIndex].text}</h2>
                 ${randomQuestions[currentQuestionIndex].img
                   ? `<div class="question__wrapper-image">
                       <img class="question__image" src="${randomQuestions[currentQuestionIndex].img}" alt="">

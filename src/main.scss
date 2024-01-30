@@ -185,16 +185,55 @@ body {
 }
 
 .result {
+  width: 100%;
   display: flex;
   justify-content: center;
   flex-direction: column;
-  align-items: center;
   gap: 15px;
   font-size: 20px;
+
+  &__score {
+    display: flex;
+    gap: 5px;
+  }
 }
 
 .timer {
+  width: 100%;
+  max-width: 70%;
   position: absolute;
   top: 20%;
   font-size: 20px;
+
+  @media (min-width: 768px) {
+    max-width: 70%;
+  }
+
+  @media (min-width: 1280px) {
+    max-width: 700px;
+  }
+}
+
+.question-points {
+  min-width: 50px;
+  color: green;
+  animation: disappearance 1s ease 0.5s 1 forwards, scale 1.5s ease 1 forwards;
+}
+
+@keyframes disappearance {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes scale {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.15);
+  }
 }
