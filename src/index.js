@@ -16,7 +16,6 @@ let darkTheme = false;
 let score = 0;
 let time = `Время: 00:00.0`;
 let timer = null;
-let pointAnswer = 0;
 
 const createElement = (tag, className) => {
   const elem = document.createElement(tag);
@@ -24,11 +23,22 @@ const createElement = (tag, className) => {
   return elem;
 };
 
+const setDarkTheme = (value) => {
+  console.log(value !== darkTheme);
+  console.log(value, darkTheme);
+  if (value !== darkTheme) {
+    darkTheme = value;
+    localStorage.setItem("dark-theme", value);
+    switchTheme.classList.toggle("dark");
+    document.body.classList.toggle("dark");
+  }
+}
+
 const switchTheme = createElement("div", "switch-theme");
 switchTheme.innerHTML = `<div class="switch-theme__circle"></div>`;
 document.body.append(switchTheme);
 if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-  darkTheme = true;
+  setDarkTheme(true);
   switchTheme.classList.add("dark");
   document.body.classList.add("dark");
 }
@@ -54,9 +64,7 @@ const renderScore = (statusAnswer) => {
 }
 
 switchTheme.addEventListener("click", () => {
-  darkTheme = !darkTheme;
-  switchTheme.classList.toggle("dark");
-  document.body.classList.toggle("dark");
+  setDarkTheme(!darkTheme);
 });
 
 const content = createElement("div", "content");
@@ -125,6 +133,8 @@ const selectAnswer = (e) => {
 };
 
 function renderContent() {
+  console.log("FFF");
+  setDarkTheme(JSON.parse(localStorage.getItem("dark-theme")) || false);
   deleteHandlers();
   if (darkTheme) document.body.className = "dark";
   else document.body.className = "";
