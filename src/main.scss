@@ -3,7 +3,7 @@
   src: url("./fonts/Roboto-Regular.ttf") format('truetupe');
 }
 
-body, button, ol, li, div {
+body, button, ol, li, div, p, h2 {
   margin: 0;
   padding: 0;
   border: none;
@@ -43,6 +43,7 @@ body {
 }
 
 .dark {
+  color: white;
 
   .logo {
     color: black;
@@ -79,12 +80,19 @@ body {
   border: none;
 }
 
+.button-start-again {
+  margin-top: 40px;
+}
+
 .container {
   position: absolute;
   top: 12%;
   width: 100%;
   display: flex;
   justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  gap: 50px;
 
   @media (min-width: 768px) {
     max-width: 70%;
@@ -107,7 +115,7 @@ body {
   }
 
   &__wrapper-image {
-    margin-bottom: 20px;
+    margin-top: 20px;
     width: 100%;
     max-width: 100%;
   }
@@ -122,6 +130,7 @@ body {
     list-style: none;
     gap: 10px;
     width: 100%;
+    margin-top: 20px;
 
     &__item {
       padding: 15px;
