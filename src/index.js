@@ -8,15 +8,14 @@ const randomizeQuestions = () => {
 
 let randomQuestions = randomizeQuestions();
 
-let testStarted = false;
+let testStarted = JSON.parse(localStorage.getItem("testStarted")) || false;
 let testEnded = false;
 let currentQuestionIndex = 0;
 let rightAnswers = 0;
 let darkTheme = false;
-let score = 0;
+let score = JSON.parse(localStorage.getItem("score")) || 0;
 let time = `Время: 00:00.0`;
 let timer = null;
-let pointAnswer = 0;
 
 const createElement = (tag, className) => {
   const elem = document.createElement(tag);
@@ -24,11 +23,30 @@ const createElement = (tag, className) => {
   return elem;
 };
 
+const setDarkTheme = (value) => {
+  if (value !== darkTheme) {
+    darkTheme = value;
+    localStorage.setItem("dark-theme", value);
+    switchTheme.classList.toggle("dark");
+    document.body.classList.toggle("dark");
+  }
+};
+
+const setScore = (value) => {
+  score = value;
+  localStorage.setItem("score", JSON.stringify(value));
+};
+
+const setTestStarted = (value) => {
+  testStarted = value;
+  localStorage.setItem("testStarted", JSON.stringify(value));
+};
+
 const switchTheme = createElement("div", "switch-theme");
 switchTheme.innerHTML = `<div class="switch-theme__circle"></div>`;
 document.body.append(switchTheme);
 if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-  darkTheme = true;
+  setDarkTheme(true);
   switchTheme.classList.add("dark");
   document.body.classList.add("dark");
 }
@@ -54,9 +72,7 @@ const renderScore = (statusAnswer) => {
 }
 
 switchTheme.addEventListener("click", () => {
-  darkTheme = !darkTheme;
-  switchTheme.classList.toggle("dark");
-  document.body.classList.toggle("dark");
+  setDarkTheme(!darkTheme);
 });
 
 const content = createElement("div", "content");
@@ -79,9 +95,9 @@ const startTimer = () => {
 const startTest = () => {
   randomQuestions = randomizeQuestions();
   rightAnswers = 0;
-  score = 0;
+  setScore(0);
   currentQuestionIndex = 0;
-  testStarted = true;
+  setTestStarted(true);
   clearInterval(timer);
   startTimer();
   testEnded = false;
@@ -98,7 +114,7 @@ const deleteHandlers = () => {
   }
   const answers = document.querySelectorAll(".question-answers__item");
   answers.forEach(answer => answer.removeEventListener("click", selectAnswer));
-}
+};
 
 const selectAnswer = (e) => {
   const elem = e.currentTarget;
@@ -108,7 +124,7 @@ const selectAnswer = (e) => {
   const right = currentQuestion.rightAnswer === answerId;
   if (right) {
     rightAnswers++;
-    score += currentQuestion.points;
+    setScore(score + currentQuestion.points);
     elem.classList.add("success");
   }
   else elem.classList.add("error");
@@ -125,6 +141,7 @@ const selectAnswer = (e) => {
 };
 
 function renderContent() {
+  setDarkTheme(JSON.parse(localStorage.getItem("dark-theme")) || false);
   deleteHandlers();
   if (darkTheme) document.body.className = "dark";
   else document.body.className = "";
